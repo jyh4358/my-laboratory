@@ -4,12 +4,12 @@ spring:
       max-file-size: 50MB
       max-request-size: 200MB
   datasource:
-    hikari:
-      driver-class-name: org.h2.Driver
-      jdbc-url: jdbc:h2:tcp://localhost/~/practice # mysql 모드 설정
-    username: sa
-    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/my-laboratory # mysql 모드 설정
+    username: mylaboratory
+    password: 12341234
   jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     properties:
@@ -35,3 +35,5 @@ spring:
   h2:
     console:
       enabled: true
+server:
+  port: 9090
