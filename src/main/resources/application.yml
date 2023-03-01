@@ -14,26 +14,21 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-#        format_sql: true  # 쿼리를 이쁘게 포맷팅
+        format_sql: true  # 쿼리를 이쁘게 포맷팅
 #        use_sql_comments: true # 쿼리가 왜 나왔는지 코멘트
         enable_lazy_load_no_trans: false
         default_batch_fetch_size: 1000
 
 #        dialect: org.hibernate.dialect.MySQLDialect #DB에 전달하는 SQL 형식 지정
-    show-sql: true  # 쿼리를 보여줌
+#    show-sql: true  # 쿼리를 보여줌
     generate-ddl: true
     defer-datasource-initialization: true
-  logging:
-    level:
-      org:
-        hibernate:
-          SQL: DEBUG
-          type:
-            descriptor:
-              sql:
-                BasicBinder: TRACE
-  h2:
-    console:
-      enabled: true
+    open-in-view:
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+
 server:
   port: 9090
