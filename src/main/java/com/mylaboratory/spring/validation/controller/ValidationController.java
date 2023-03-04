@@ -1,9 +1,9 @@
-package com.mylaboratory.spring.validation.common.controller;
+package com.mylaboratory.spring.validation.controller;
 
 import com.mylaboratory.spring.validation.common.BaseCode;
 import com.mylaboratory.spring.validation.common.DefaultHttpResponse;
-import com.mylaboratory.spring.validation.common.controller.request.AssertTrueUtilizeRequest;
-import com.mylaboratory.spring.validation.common.controller.request.CustomConstraintRequest;
+import com.mylaboratory.spring.validation.controller.request.AssertTrueUtilizeRequest;
+import com.mylaboratory.spring.validation.controller.request.CustomConstraintRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

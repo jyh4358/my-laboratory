@@ -1,4 +1,4 @@
-package com.mylaboratory.spring.validation.common.controller.request;
+package com.mylaboratory.spring.validation.controller.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.AssertTrue;

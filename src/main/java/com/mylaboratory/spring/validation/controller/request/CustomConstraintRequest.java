@@ -1,4 +1,4 @@
-package com.mylaboratory.spring.validation.common.controller.request;
+package com.mylaboratory.spring.validation.controller.request;
 
 import com.mylaboratory.spring.validation.common.custom_validation.NotContainBlank;
 import lombok.AllArgsConstructor;

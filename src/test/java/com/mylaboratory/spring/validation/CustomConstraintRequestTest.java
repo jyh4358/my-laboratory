@@ -2,8 +2,8 @@ package com.mylaboratory.spring.validation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mylaboratory.spring.validation.common.BaseCode;
-import com.mylaboratory.spring.validation.common.controller.request.CustomConstraintRequest;
-import com.mylaboratory.spring.validation.common.controller.ValidationController;
+import com.mylaboratory.spring.validation.controller.request.CustomConstraintRequest;
+import com.mylaboratory.spring.validation.controller.ValidationController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
