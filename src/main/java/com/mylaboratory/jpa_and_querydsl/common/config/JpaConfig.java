@@ -1,4 +1,4 @@
-package com.mylaboratory.jpa.exist_test;
+package com.mylaboratory.jpa_and_querydsl.common.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

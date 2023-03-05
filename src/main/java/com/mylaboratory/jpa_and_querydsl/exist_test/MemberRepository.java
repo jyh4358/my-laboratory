@@ -1,4 +1,4 @@
-package com.mylaboratory.jpa.exist_test;
+package com.mylaboratory.jpa_and_querydsl.exist_test;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

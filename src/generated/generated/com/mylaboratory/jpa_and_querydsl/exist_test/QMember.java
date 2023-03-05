@@ -1,4 +1,4 @@
-package com.mylaboratory.jpa.exist_test;
+package com.mylaboratory.jpa_and_querydsl.exist_test;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -15,7 +15,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QMember extends EntityPathBase<Member> {
 
-    private static final long serialVersionUID = -270396359L;
+    private static final long serialVersionUID = -1274115997L;
 
     public static final QMember member = new QMember("member1");
 
