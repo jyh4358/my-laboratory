@@ -1,7 +1,5 @@
-package com.mylaboratory.spring;
+package com.mylaboratory.spring.property;
 
-import com.mylaboratory.spring.property.AWSProperty;
-import com.mylaboratory.spring.property.S3Property;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("local")
-public class ProfileTest {
+public class PropertyTest {
 
     @Value("${aws.s3.access-key}")
     private String accessKey;
@@ -29,10 +27,13 @@ public class ProfileTest {
     @Autowired
     private AWSProperty awsProperty;
 
+    @Autowired
+    private S3InnerProperty s3InnerProperty;
+
 
     @DisplayName("@Value 어노테이션 사용")
     @Test
-    public void property_test1() {
+    void property_test1() {
         Assertions.assertThat(accessKey).isEqualTo("access-key value");
         Assertions.assertThat(secretKey).isEqualTo("secret-key value");
         Assertions.assertThat(bucket).isEqualTo("bucket value");
@@ -40,7 +41,7 @@ public class ProfileTest {
 
     @DisplayName("@ConfigurationProperties 어노테이션 사용")
     @Test
-    public void property_test2() {
+    void property_test2() {
         Assertions.assertThat(s3Property.getAccessKey()).isEqualTo("access-key value");
         Assertions.assertThat(s3Property.getSecretKey()).isEqualTo("secret-key value");
         Assertions.assertThat(s3Property.getBucket()).isEqualTo("bucket value");
@@ -48,11 +49,20 @@ public class ProfileTest {
 
     @DisplayName("@ConfigurationProperties 어노테이션 사용 - 여러개 Property")
     @Test
-    public void property_test3() {
-        Assertions.assertThat(awsProperty.getS3Property().getAccessKey()).isEqualTo("access-key value");
-        Assertions.assertThat(awsProperty.getS3Property().getSecretKey()).isEqualTo("secret-key value");
-        Assertions.assertThat(awsProperty.getS3Property().getBucket()).isEqualTo("bucket value");
-        Assertions.assertThat(awsProperty.getRegionProperty().getRegionStatic()).isEqualTo("region-static value");
+    void property_test3() {
+        Assertions.assertThat(awsProperty.getS3().getAccessKey()).isEqualTo("access-key value");
+        Assertions.assertThat(awsProperty.getS3().getSecretKey()).isEqualTo("secret-key value");
+        Assertions.assertThat(awsProperty.getS3().getBucket()).isEqualTo("bucket value");
+        Assertions.assertThat(awsProperty.getRegion().getRegionStatic()).isEqualTo("region-static value");
+    }
+
+    @DisplayName("@Configurati@ConfigurationProperties 어노테이션 사용 - inner class 사용")
+    @Test
+    void property_test4() {
+        Assertions.assertThat(s3InnerProperty.getAccessKey()).isEqualTo("access-key value");
+        Assertions.assertThat(s3InnerProperty.getSecretKey()).isEqualTo("secret-key value");
+        Assertions.assertThat(s3InnerProperty.getBucket().getStage()).isEqualTo("stage-bucket value");
+        Assertions.assertThat(s3InnerProperty.getBucket().getProduction()).isEqualTo("production-bucket value");
     }
 
 }

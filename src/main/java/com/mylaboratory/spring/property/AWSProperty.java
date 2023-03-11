@@ -8,6 +8,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @RequiredArgsConstructor
 public class AWSProperty {
-    private final S3Property s3Property;
-    private final RegionProperty regionProperty;
+    private final S3Property s3;
+    private final RegionProperty region;
 }
