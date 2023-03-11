@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    activate:
+      on-profile: local
+
+
+
+aws:
+  s3:
+    access-key: access-key value
+    secret-key: secret-key value
+    bucket: bucket value
+  region:
+    region-static: region-static value
+
+s3:
+  access-key: access-key value
+  secret-key: secret-key value
+    bucket:
+      stage: stage-bucket value
+      production: production-bucket value
