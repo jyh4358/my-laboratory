@@ -3,7 +3,9 @@ spring:
     activate:
       on-profile: local
 
-
+test-property:
+  value1: true
+  value2: 1234
 
 aws:
   s3:
