@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -167,7 +168,32 @@ class CoffeeStreamTest {
                         .filter(j -> (i + j) % 3 == 0)
                         .map(j -> new int[]{i, j}))
                 .collect(Collectors.toList());
+    }
 
+    @Test
+    void stream_anyMatch() {
+        boolean isMega = coffeeList.stream()
+                .anyMatch(coffee -> coffee.getBrands().equals(Brands.MEGA));
+    }
 
+    @Test
+    void stream_allMatch() {
+        boolean allMatchCheck = coffeeList.stream()
+                .allMatch(coffee -> coffee.getPrice() >= 2000);
+    }
+
+    @Test
+    void stream_noneMatch() {
+        boolean noneMatchCheck = coffeeList.stream()
+                .noneMatch(coffee -> coffee.getPrice() < 2000);
+    }
+
+    @Test
+    void stream_findAny() {
+        Optional<Coffee> coffeeOp = coffeeList.stream()
+                .filter(coffee -> coffee.getBrands().equals(Brands.MEGA))
+                .findAny();
+        Coffee coffee = coffeeOp.get();
+        System.out.println("coffee = " + coffee);
     }
 }

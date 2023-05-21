@@ -3,6 +3,7 @@ package com.mylaboratory.java.modern_java_in_action.ch2_and_ch3;
 import com.mylaboratory.java.modern_java_in_action.ch2_and_ch3.predicate.CoffeePredicate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @Getter
+@ToString
 @NoArgsConstructor
 public class Coffee {
     private int price;
