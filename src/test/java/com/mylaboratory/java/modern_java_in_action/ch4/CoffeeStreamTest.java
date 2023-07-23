@@ -120,6 +120,10 @@ class CoffeeStreamTest {
         List<Coffee> limitList = coffeeList.stream()
                 .filter(coffee -> coffee.getPrice() <= 3000)
                 .limit(2)
+                .map(coffee -> {
+                    System.out.println("coffee = " + coffee);
+                    return coffee;
+                })
                 .collect(Collectors.toList());
     }
 

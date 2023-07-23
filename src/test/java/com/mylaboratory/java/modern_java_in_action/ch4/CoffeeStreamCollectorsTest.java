@@ -110,7 +110,7 @@ class CoffeeStreamCollectorsTest {
         // 두번째 인수 - reduce 가 수행할 요소들
         // 세번째 인수 - reduce 수행 식
         Integer customPriceSum = coffeeList.stream()
-                .collect(Collectors.reducing(0, Coffee::getPrice, (a, b) -> a + b));
+                .collect(Collectors.reducing(0, Coffee::getPrice, (a, b) -> b >= 3000 ? a + b : a));
         log.info("customPriceSum = {}", customPriceSum);
     }
 
