@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAccessor;
+import java.time.temporal.*;
 
 @Slf4j
 public class TimeAndDateApiTest {
@@ -68,6 +67,16 @@ public class TimeAndDateApiTest {
         long secondOfDay = 36_500L; // 10시 8분 20초에 해당하는 초
         LocalTime localTime8 = LocalTime.ofSecondOfDay(secondOfDay);
         log.info("localTime8 = {}", localTime8); // 출력: 10:08:20
+
+        // 그 외 클래스 변수
+        LocalTime min = LocalTime.MIN;
+        LocalTime max = LocalTime.MAX;
+        LocalTime midnight = LocalTime.MIDNIGHT;
+        LocalTime noon = LocalTime.NOON;
+        log.info("min = {}", min);
+        log.info("max = {}", max);
+        log.info("midnight = {}", midnight);
+        log.info("noon = {}", noon);
     }
 
     @DisplayName("LocalTime 시간 관련 값들을 반환하는 메서드")
@@ -144,11 +153,116 @@ public class TimeAndDateApiTest {
         log.info("localDate11 = {}", localDate11);
 
         LocalDate epoch = LocalDate.EPOCH;
-        System.out.println("epoch = " + epoch);
         LocalDate max = LocalDate.MAX;
         LocalDate min = LocalDate.MIN;
-        System.out.println("max = " + max);
-        System.out.println("min = " + min);
+        log.info("epoch = {}", epoch);
+        log.info("max = {}", max);
+        log.info("min = {}", min);
+    }
+
+    @DisplayName("LocalDate 정적 팩토리 메서드")
+    @Test
+    void localDateTime_create_api() {
+
+        // now 사용
+        LocalDateTime localDateTime1 = LocalDateTime.now();
+        log.info("localDateTime1 = {}", localDateTime1);
+
+        // of 사용 1
+        LocalDateTime localDateTime2 = LocalDateTime.of(2023, 8, 19, 13, 30);
+        LocalDateTime localDateTime3 = LocalDateTime.of(2023, 8, 19, 13, 30, 11);
+        LocalDateTime localDateTime4 = LocalDateTime.of(2023, 8, 19, 13, 30, 11, 1000);
+        LocalDateTime localDateTime5 = LocalDateTime.of(2023, Month.AUGUST, 19, 13, 30);
+        LocalDateTime localDateTime6 = LocalDateTime.of(2023, Month.AUGUST, 19, 13, 30, 12);
+        LocalDateTime localDateTime7 = LocalDateTime.of(2023, Month.AUGUST, 19, 13, 30, 12, 2000);
+
+        log.info("localDateTime2 = {}", localDateTime2);
+        log.info("localDateTime3 = {}", localDateTime3);
+        log.info("localDateTime4 = {}", localDateTime4);
+        log.info("localDateTime5 = {}", localDateTime5);
+        log.info("localDateTime6 = {}", localDateTime6);
+        log.info("localDateTime7 = {}", localDateTime7);
+
+        // of 사용 2
+        LocalDateTime localDateTime10 = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        log.info("localDateTime10 = {}", localDateTime10);
+
+
+        // parse 사용 1
+        LocalDateTime localDateTime11 = LocalDateTime.parse("2023-08-19T14:03:30");
+        log.info("localDateTime11 = {}", localDateTime11);
+
+        // parse 사용 2
+        LocalDateTime localDateTime12 = LocalDateTime.parse("2023.08.19 14:03:30", DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
+        log.info("localDateTIme12 = {}", localDateTime12);
+
+
+        // from 사용 1
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(
+                2023, 8, 15,
+                8, 20, 30, 0,
+                ZoneId.systemDefault());
+        LocalDateTime localDateTime13 = LocalDateTime.from(zonedDateTime);
+        log.info("localDateTime13 = {}", localDateTime13);
+
+        // ofInstant 사용 1
+        Instant now = Instant.now();               // 현재 시간 기준 -9 시간을 뺀 LocalDate 생성
+        ZoneId zoneId = ZoneId.systemDefault();    // "Asia/Seoul" 서울 시간대
+        LocalDateTime localDateTime14 = LocalDateTime.ofInstant(now, zoneId); // 현재 서울의 날짜와 시간
+        log.info("localDateTime14 = {}", localDateTime14);
+
+        // ofInstant 사용 2
+        ZoneId seoulZone = ZoneId.of("Asia/Seoul");         // 서울 시간대
+        ZoneId newYorkZone = ZoneId.of("America/New_York"); // 뉴욕 시간대
+        LocalDateTime localDateTime15 = LocalDateTime.ofInstant(now, newYorkZone); // 뉴욕 날짜와 시간
+        log.info("localDateTime15 = {}", localDateTime15);
+
+        // 그외 클래스 변수
+        LocalDateTime min = LocalDateTime.MIN;
+        LocalDateTime max = LocalDateTime.MAX;
+        log.info("min = {}", min);
+        log.info("max = {}", max);
+
+        // with 사용 1
+        LocalDateTime oldLocalDateTime = LocalDateTime.of(2023, 8, 19, 15, 3, 22, 1000);
+        LocalDateTime newLocalDateTime1 = oldLocalDateTime.with(ChronoField.HOUR_OF_DAY, 16);
+        LocalDateTime newLocalDateTime2 = oldLocalDateTime.with(TemporalAdjusters.firstDayOfMonth());
+        LocalDateTime newLocalDateTime3 = oldLocalDateTime.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
+
+        log.info("oldLocalDateTime = {}", oldLocalDateTime);
+        log.info("newLocalDateTime1 = {}", newLocalDateTime1);
+        log.info("newLocalDateTime2 = {}", newLocalDateTime2);
+        log.info("newLocalDateTime3 = {}", newLocalDateTime3);
+
+        // with 관련 메서드 사용 1
+        LocalDateTime newLocalDateTime4 = oldLocalDateTime.withYear(2022);
+        LocalDateTime newLocalDateTime5 = oldLocalDateTime.withMonth(9);
+        LocalDateTime newLocalDateTime6 = oldLocalDateTime.withDayOfMonth(22);
+        LocalDateTime newLocalDateTime7 = oldLocalDateTime.withHour(20);
+        LocalDateTime newLocalDateTime8 = oldLocalDateTime.withMinute(30);
+        LocalDateTime newLocalDateTime9 = oldLocalDateTime.withSecond(45);
+        LocalDateTime newLocalDateTime10 = oldLocalDateTime.withNano(1000);
+
+        log.info("newLocalDateTime4 = {}", newLocalDateTime4);
+        log.info("newLocalDateTime5 = {}", newLocalDateTime5);
+        log.info("newLocalDateTime6 = {}", newLocalDateTime6);
+        log.info("newLocalDateTime7 = {}", newLocalDateTime7);
+        log.info("newLocalDateTime8 = {}", newLocalDateTime8);
+        log.info("newLocalDateTime9 = {}", newLocalDateTime9);
+        log.info("newLocalDateTime10 = {}", newLocalDateTime10);
+
+
+        // truncatedTo 사용 1
+        LocalDateTime localDateTime16 = oldLocalDateTime.truncatedTo(ChronoUnit.DAYS);
+        LocalDateTime localDateTime17 = oldLocalDateTime.truncatedTo(ChronoUnit.HOURS);
+        LocalDateTime localDateTime18 = oldLocalDateTime.truncatedTo(ChronoUnit.MINUTES);
+        LocalDateTime localDateTime19 = oldLocalDateTime.truncatedTo(ChronoUnit.SECONDS);
+
+        log.info("localDateTime16 = {}", localDateTime16);
+        log.info("localDateTime17 = {}", localDateTime17);
+        log.info("localDateTime18 = {}", localDateTime18);
+        log.info("localDateTime19 = {}", localDateTime19);
+
 
 
     }
