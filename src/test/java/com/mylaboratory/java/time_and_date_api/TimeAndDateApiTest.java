@@ -2,6 +2,7 @@ package com.mylaboratory.java.time_and_date_api;
 
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.asm.Advice;
+import org.hibernate.query.sqm.TemporalUnit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -82,7 +83,7 @@ public class TimeAndDateApiTest {
     @DisplayName("LocalTime 시간 관련 값들을 반환하는 메서드")
     @Test
     void localTime_method() {
-        LocalTime localTime = LocalTime.of(13, 30, 20,1000);
+        LocalTime localTime = LocalTime.of(13, 30, 20, 1000);
         int hour = localTime.getHour();
         int minute = localTime.getMinute();
         int second = localTime.getSecond();
@@ -204,12 +205,14 @@ public class TimeAndDateApiTest {
                 ZoneId.systemDefault());
         LocalDateTime localDateTime13 = LocalDateTime.from(zonedDateTime);
         log.info("localDateTime13 = {}", localDateTime13);
+        log.info("zonedDateTime = {}", zonedDateTime);
 
         // ofInstant 사용 1
         Instant now = Instant.now();               // 현재 시간 기준 -9 시간을 뺀 LocalDate 생성
         ZoneId zoneId = ZoneId.systemDefault();    // "Asia/Seoul" 서울 시간대
         LocalDateTime localDateTime14 = LocalDateTime.ofInstant(now, zoneId); // 현재 서울의 날짜와 시간
         log.info("localDateTime14 = {}", localDateTime14);
+        log.info("now = {}", now);
 
         // ofInstant 사용 2
         ZoneId seoulZone = ZoneId.of("Asia/Seoul");         // 서울 시간대
@@ -262,8 +265,99 @@ public class TimeAndDateApiTest {
         log.info("localDateTime17 = {}", localDateTime17);
         log.info("localDateTime18 = {}", localDateTime18);
         log.info("localDateTime19 = {}", localDateTime19);
+    }
+
+    @DisplayName("날짜 시간 관련 정보 얻기")
+    @Test
+    void get_date_and_time() {
+        LocalDate localDate = LocalDate.of(2023, 8, 19);
+        LocalTime localTime = LocalTime.of(19, 11, 20, 4500);
+
+        log.info("LocalDate");
+        log.info("localDate.getYear() = {}", localDate.getYear());
+        log.info("localDate.getMonth() = {}", localDate.getMonth());
+        log.info("localDate.getMonthValue() = {}", localDate.getMonthValue());
+        log.info("localDate.getDayOfYear() = {}", localDate.getDayOfYear());
+        log.info("localDate.getDayOfMonth() = {}", localDate.getDayOfMonth());
+        log.info("localDate.getDayOfWeek() = {}", localDate.getDayOfWeek());
+        log.info("localDate.isLeapYear() = {}", localDate.isLeapYear());
+
+        log.info("localTime.getHour() = {}", localTime.getHour());
+        log.info("localTime.getMinute() = {}", localTime.getMinute());
+        log.info("localTime.getSecond() = {}", localTime.getSecond());
+        log.info("localTime.getNano() = {}", localTime.getNano());
+        log.info("localTime.getLong(ChronoField.HOUR_OF_DAY) = {}", localTime.getLong(ChronoField.HOUR_OF_DAY));
+
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(
+                2023, 8, 15,
+                15, 20, 30, 0,
+                ZoneId.systemDefault());
+        log.info("zonedDateTime.getZone() = {}", zonedDateTime.getZone());
+        log.info("zonedDateTime.getOffset() = {}", zonedDateTime.getOffset());
+    }
+
+    @DisplayName("TemporalAdjusters 클래스를 이용한 상대 날짜 구하기")
+    @Test
+    void relative_date() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime firstDayOfYear = localDateTime.with(TemporalAdjusters.firstDayOfYear());
+        LocalDateTime lastDayOfYear = localDateTime.with(TemporalAdjusters.lastDayOfYear());
+        LocalDateTime firstDayOfNextYear = localDateTime.with(TemporalAdjusters.firstDayOfNextYear());
+        LocalDateTime firstDayOfMonth = localDateTime.with(TemporalAdjusters.firstDayOfMonth());
+        LocalDateTime lastDayOfMonth = localDateTime.with(TemporalAdjusters.lastDayOfMonth());
+        LocalDateTime firstDayOfNextMonth = localDateTime.with(TemporalAdjusters.firstDayOfNextMonth());
+        LocalDateTime firstInMonth = localDateTime.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
+        LocalDateTime lastInMonth = localDateTime.with(TemporalAdjusters.lastInMonth(DayOfWeek.SUNDAY));
+        LocalDateTime next = localDateTime.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+        LocalDateTime nextOrSame = localDateTime.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+        LocalDateTime previous = localDateTime.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
+        LocalDateTime previousOrSame = localDateTime.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+
+        log.info("localDateTime = {}", localDateTime);
+        log.info("firstDayOfYear = {}", firstDayOfYear);
+        log.info("lastDayOfYear = {}", lastDayOfYear);
+        log.info("firstDayOfNextYear = {}", firstDayOfNextYear);
+        log.info("firstDayOfMonth = {}", firstDayOfMonth);
+        log.info("lastDayOfMonth = {}", lastDayOfMonth);
+        log.info("firstDayOfNextMonth = {}", firstDayOfNextMonth);
+        log.info("firstInMonth = {}", firstInMonth);
+        log.info("lastInMonth = {}", lastInMonth);
+        log.info("next = {}", next);
+        log.info("nextOrSame = {}", nextOrSame);
+        log.info("previous = {}", previous);
+        log.info("previousOrSame = {}", previousOrSame);
+    }
+
+    @DisplayName("날짜와 시간 비교하기")
+    @Test
+    void 날짜_시간_비교() {
+        LocalDateTime localDateTime1 = LocalDateTime.now();
+        log.info("localDateTime1 = {}", localDateTime1);
+        LocalDateTime localDateTime2 = localDateTime1.minusDays(1);
+        log.info("localDateTime2 = {}", localDateTime2);
 
 
+        log.info("localDateTime1.isAfter(localDateTime2) = {}", localDateTime1.isAfter(localDateTime2));
+        log.info("localDateTime1.isBefore(localDateTime2) = {}", localDateTime1.isBefore(localDateTime2));
+        log.info("localDateTime1.isEqual(localDateTime2) = {}", localDateTime1.isEqual(localDateTime2));
+        log.info("localDateTime1.isEqual(localDateTime2.plusDays(1) = {}", localDateTime1.isEqual(localDateTime2.plusDays(1)));
 
+        log.info("localDateTime1.until(localDateTime2, ChronoUnit.DAYS) = {}", localDateTime1.until(localDateTime2, ChronoUnit.DAYS));
+        log.info("localDateTime1.until(localDateTime2, ChronoUnit.HOURS) = {}", localDateTime1.until(localDateTime2, ChronoUnit.HOURS));
+
+        Period period = Period.between(localDateTime1.toLocalDate(), localDateTime2.toLocalDate());
+        log.info("period.getDay() = {}", period.getDays());
+
+        Duration duration = Duration.between(localDateTime1, localDateTime2);
+        log.info("duration.toHours = {}", duration.toHours());
+
+        log.info("ChronoUnit.YEARS.between(localDateTime1, localDateTime2) = {}", ChronoUnit.YEARS.between(localDateTime1, localDateTime2));
+        log.info("ChronoUnit.MONTHS.between(localDateTime1, localDateTime2) = {}", ChronoUnit.MONTHS.between(localDateTime1, localDateTime2));
+        log.info("ChronoUnit.WEEKS.between(localDateTime1, localDateTime2) = {}", ChronoUnit.WEEKS.between(localDateTime1, localDateTime2));
+        log.info("ChronoUnit.DAYS.between(localDateTime1, localDateTime2) = {}", ChronoUnit.DAYS.between(localDateTime1, localDateTime2));
+        log.info("ChronoUnit.HOURS.between(localDateTime1, localDateTime2) = {}", ChronoUnit.HOURS.between(localDateTime1, localDateTime2));
+        log.info("ChronoUnit.SECONDS.between(localDateTime1, localDateTime2) = {}", ChronoUnit.SECONDS.between(localDateTime1, localDateTime2));
+        log.info("ChronoUnit.MILLIS.between(localDateTime1, localDateTime2) = {}", ChronoUnit.MILLIS.between(localDateTime1, localDateTime2));
+        log.info("ChronoUnit.NANOS.between(localDateTime1, localDateTime2) = {}", ChronoUnit.NANOS.between(localDateTime1, localDateTime2));
     }
 }
