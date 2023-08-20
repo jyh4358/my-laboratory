@@ -1,14 +1,14 @@
 package com.mylaboratory.java.time_and_date_api;
 
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.asm.Advice;
-import org.hibernate.query.sqm.TemporalUnit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.*;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 
 @Slf4j
 public class TimeAndDateApiTest {
@@ -330,7 +330,7 @@ public class TimeAndDateApiTest {
 
     @DisplayName("날짜와 시간 비교하기")
     @Test
-    void 날짜_시간_비교() {
+    void compare_date() {
         LocalDateTime localDateTime1 = LocalDateTime.now();
         log.info("localDateTime1 = {}", localDateTime1);
         LocalDateTime localDateTime2 = localDateTime1.minusDays(1);
