@@ -29,3 +29,16 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.orm.jdbc.bind: TRACE
+
+springdoc:
+  packages-to-scan: com.mylaboratory.spring.swagger
+  swagger-ui:
+    path: /test                   # Swagger UI 경로 => localhost:8000/demo-ui.html
+    tags-sorter: alpha            # alpha: 알파벳 순 태그 정렬, method: HTTP Method 순 정렬
+    operations-sorter: method     # alpha: 알파벳 순 메서드 정렬, method: HTTP Method 순 정렬
+  #    enabled: false # swagger-ui를 비활성화하려면 다음 속성을 사용 (swagger-ui 사용하지 않을 경우 설정)
+  api-docs:
+    path: /api-docs
+#    enabled: false  # 엔드포인트(기본적으로 /v3/api-docs)를 비활성화하려면 다음 속성을 사용, swagger-ui 도 비활성화 됨
+  cache:
+    disabled: true
